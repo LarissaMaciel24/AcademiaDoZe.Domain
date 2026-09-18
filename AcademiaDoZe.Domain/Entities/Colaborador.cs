@@ -9,10 +9,11 @@ using AcademiaDoZe.Domain.Commom;
 using AcademiaDoZe.Domain.Enums;
 using AcademiaDoZe.Domain.Services;
 using AcademiaDoZe.Domain.ValueObjects;
+using AcademiaDoZe.Domain.Common;
 
 namespace AcademiaDoZe.Domain.Entities;
 
-public class Colaborador : Pessoa
+public class Colaborador : Pessoa, IAggregateRoot
 {
     public DateOnly DataAdmissao { get; private set; }
 
@@ -108,5 +109,10 @@ public class Colaborador : Pessoa
                 dataAdmissao,
                 tipo,
                 vinculo));
+    }
+
+    public static object Criar(int id, string nome, string cpf, DateOnly dataNascimento, string telefone, string email, Endereco endereco, string senha, Arquivo foto, DateOnly dataAdmissao, ColaboradorTipo tipo, ColaboradorVinculo vinculo)
+    {
+        throw new NotImplementedException();
     }
 }

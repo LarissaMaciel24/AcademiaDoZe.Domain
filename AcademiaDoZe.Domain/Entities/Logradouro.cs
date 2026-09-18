@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
+using AcademiaDoZe.Domain.Common;
+using AcademiaDoZe.Domain.Commom;
+using AcademiaDoZe.Domain.Services;
+using AcademiaDoZe.Domain.ValueObjects;
 
 // Larissa Maciel
 
-using AcademiaDoZe.Domain.Commom;
-using AcademiaDoZe.Domain.Services;
-
 namespace AcademiaDoZe.Domain.Entities;
 
-public class Logradouro
+public class Logradouro : Entity, IAggregateRoot
 {
     public string Pais { get; private set; }
 
@@ -22,26 +22,55 @@ public class Logradouro
 
     public string Nome { get; private set; }
 
+    public Cep Cep { get; private set; }
+
     private Logradouro(
+        int id,
         string pais,
         string estado,
         string cidade,
         string bairro,
-        string nome)
+        string nome,
+        Cep cep)
+        : base(id)
     {
         Pais = pais;
         Estado = estado;
         Cidade = cidade;
         Bairro = bairro;
         Nome = nome;
+        Cep = cep;
     }
 
+    // Compatibilidade com os testes antigos
+    // que ainda não informam o CEP.
     public static Result<Logradouro> Criar(
+        int id,
         string pais,
         string estado,
         string cidade,
         string bairro,
         string nome)
+    {
+        return Criar(
+            id,
+            pais,
+            estado,
+            cidade,
+            bairro,
+            nome,
+            "88000000");
+    }
+
+    // Criação completa, incluindo o CEP.
+    public static Result<Logradouro> Criar(
+        int id,
+        string pais,
+        string estado,
+        string cidade,
+        string bairro,
+        string nome,
+        string cep)
     {
         var notificacoes = new List<Notification>();
 
@@ -52,29 +81,67 @@ public class Logradouro
         nome = NormalizadoService.PrimeiraLetraMaiuscula(nome);
 
         if (string.IsNullOrWhiteSpace(pais))
-            notificacoes.Add(new Notification("Pais", "O país é obrigatório."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Pais",
+                    "O país é obrigatório."));
+        }
 
         if (string.IsNullOrWhiteSpace(estado))
-            notificacoes.Add(new Notification("Estado", "O estado é obrigatório."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Estado",
+                    "O estado é obrigatório."));
+        }
 
         if (string.IsNullOrWhiteSpace(cidade))
-            notificacoes.Add(new Notification("Cidade", "A cidade é obrigatória."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Cidade",
+                    "A cidade é obrigatória."));
+        }
 
         if (string.IsNullOrWhiteSpace(bairro))
-            notificacoes.Add(new Notification("Bairro", "O bairro é obrigatório."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Bairro",
+                    "O bairro é obrigatório."));
+        }
 
         if (string.IsNullOrWhiteSpace(nome))
-            notificacoes.Add(new Notification("Nome", "O logradouro é obrigatório."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Nome",
+                    "O logradouro é obrigatório."));
+        }
+
+        var cepResult = Cep.Criar(cep);
+
+        if (!cepResult.Sucesso)
+        {
+            notificacoes.AddRange(
+                cepResult.Notificacoes);
+        }
 
         if (notificacoes.Any())
-            return Result<Logradouro>.Failure(notificacoes);
+        {
+            return Result<Logradouro>.Failure(
+                notificacoes);
+        }
 
         return Result<Logradouro>.Success(
             new Logradouro(
+                id,
                 pais,
                 estado,
                 cidade,
                 bairro,
-                nome));
+                nome,
+                cepResult.Valor!));
     }
 }

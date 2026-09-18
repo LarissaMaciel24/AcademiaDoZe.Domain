@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 // Larissa Maciel
 
@@ -45,21 +43,36 @@ public record Endereco
         complemento = NormalizadoService.LimparEspacos(complemento);
 
         if (cep == null)
-            notificacoes.Add(new Notification("Cep", "O CEP é obrigatório."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Cep",
+                    "O CEP é obrigatório."));
+        }
 
         if (logradouro == null)
-            notificacoes.Add(new Notification("Logradouro", "O logradouro é obrigatório."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Logradouro",
+                    "O logradouro é obrigatório."));
+        }
 
         if (string.IsNullOrWhiteSpace(numero))
-            notificacoes.Add(new Notification("Numero", "O número é obrigatório."));
+        {
+            notificacoes.Add(
+                new Notification(
+                    "Numero",
+                    "O número é obrigatório."));
+        }
 
         if (notificacoes.Any())
             return Result<Endereco>.Failure(notificacoes);
 
         return Result<Endereco>.Success(
             new Endereco(
-                cep,
-                logradouro,
+                cep!,
+                logradouro!,
                 numero,
                 complemento));
     }

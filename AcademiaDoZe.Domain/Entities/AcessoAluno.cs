@@ -1,15 +1,15 @@
-﻿using System;
+﻿// Larissa Maciel
+
+using AcademiaDoZe.Domain.Commom;
+using AcademiaDoZe.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-// Larissa Maciel
-
-using AcademiaDoZe.Domain.Commom;
-
 namespace AcademiaDoZe.Domain.Entities;
 
-public class AcessoAluno : Entity
+public class AcessoAluno : Entity, IAggregateRoot
 {
     public Aluno Aluno { get; private set; }
 

@@ -1,18 +1,18 @@
-﻿using System;
+﻿using AcademiaDoZe.Domain.Commom;
+using AcademiaDoZe.Domain.Common;
+using AcademiaDoZe.Domain.Enums;
+using AcademiaDoZe.Domain.Services;
+using AcademiaDoZe.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 // Larissa Maciel
 
-using AcademiaDoZe.Domain.Commom;
-using AcademiaDoZe.Domain.Enums;
-using AcademiaDoZe.Domain.Services;
-using AcademiaDoZe.Domain.ValueObjects;
-
 namespace AcademiaDoZe.Domain.Entities;
 
-public class Matricula : Entity
+public class Matricula : Entity, IAggregateRoot
 {
     public Aluno Aluno { get; private set; }
 

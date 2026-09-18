@@ -1,17 +1,17 @@
-﻿using System;
+﻿// Larissa Maciel
+
+using AcademiaDoZe.Domain.Commom;
+using AcademiaDoZe.Domain.Common;
+using AcademiaDoZe.Domain.Services;
+using AcademiaDoZe.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-// Larissa Maciel
-
-using AcademiaDoZe.Domain.Commom;
-using AcademiaDoZe.Domain.Services;
-using AcademiaDoZe.Domain.ValueObjects;
-
 namespace AcademiaDoZe.Domain.Entities;
 
-public class Aluno : Pessoa
+public class Aluno : Pessoa, IAggregateRoot
 {
     private Aluno(
         int id,

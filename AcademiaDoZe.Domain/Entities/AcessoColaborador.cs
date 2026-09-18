@@ -1,15 +1,15 @@
-﻿using System;
+﻿// Larissa Maciel
+
+using AcademiaDoZe.Domain.Commom;
+using AcademiaDoZe.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-// Larissa Maciel
-
-using AcademiaDoZe.Domain.Commom;
-
 namespace AcademiaDoZe.Domain.Entities;
 
-public class AcessoColaborador : Entity
+public class AcessoColaborador : Entity, IAggregateRoot
 {
     public Colaborador Colaborador { get; private set; }
 
