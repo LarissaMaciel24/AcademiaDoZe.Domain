@@ -1,0 +1,43 @@
+﻿using AcademiaDoZe.Presentation.AppMaui.Configuration;
+using AcademiaDoZe.Presentation.AppMaui.ViewModels;
+using AcademiaDoZe.Presentation.AppMaui.Views;
+using Microsoft.Extensions.Logging;
+
+namespace AcademiaDoZe.Presentation.AppMaui;
+
+//Larissa Maciel 
+public static class MauiProgram
+{
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                // fonte de ícones (Material Icons)
+                fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcons");
+            });
+
+        // Serviços da aplicação e repositórios
+        ConfigurationHelper.ConfigureServices(builder.Services);
+
+        // ViewModels
+        builder.Services.AddTransient<DashboardListViewModel>();
+        builder.Services.AddTransient<LogradouroListViewModel>();
+        builder.Services.AddTransient<LogradouroViewModel>();
+
+        // Views
+        builder.Services.AddTransient<DashboardListPage>();
+        builder.Services.AddTransient<LogradouroListPage>();
+        builder.Services.AddTransient<LogradouroPage>();
+        builder.Services.AddTransient<ConfigPage>();
+
+#if DEBUG
+        builder.Logging.AddDebug();
+#endif
+        return builder.Build();
+    }
+}
