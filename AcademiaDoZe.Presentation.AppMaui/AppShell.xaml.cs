@@ -9,12 +9,12 @@ public partial class AppShell : Shell
         InitializeComponent();
         RegisterRoutes();
     }
-
-    // Rota das páginas que não estão no menu (cadastro/edição)
     private static void RegisterRoutes()
     {
 #pragma warning disable CA1416
         Routing.RegisterRoute("logradouro", typeof(LogradouroPage));
+        Routing.RegisterRoute("colaborador", typeof(ColaboradorPage));
+        Routing.RegisterRoute("aluno", typeof(AlunoPage));
 #pragma warning restore CA1416
     }
 }

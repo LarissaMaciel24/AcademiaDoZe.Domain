@@ -62,9 +62,11 @@ public partial class DashboardListViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task NavigateToAlunosAsync() => await Shell.Current.DisplayAlertAsync("Em breve", "A tela de Alunos será criada nas próximas etapas.", "OK");
+    private async Task NavigateToAlunosAsync() => await Shell.Current.GoToAsync("//alunos");
+
     [RelayCommand]
-    private async Task NavigateToColaboradoresAsync() => await Shell.Current.DisplayAlertAsync("Em breve", "A tela de Colaboradores será criada nas próximas etapas.", "OK");
+    private async Task NavigateToColaboradoresAsync() => await Shell.Current.GoToAsync("//colaboradores");
+
     [RelayCommand]
     private async Task NavigateToMatriculasAsync() => await Shell.Current.DisplayAlertAsync("Em breve", "A tela de Matrículas será criada nas próximas etapas.", "OK");
 }
